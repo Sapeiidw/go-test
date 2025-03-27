@@ -1,0 +1,51 @@
+# Binaries & Executables
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# Build Artifacts
+/build/
+/bin/
+/dist/
+
+# Go Modules & Dependencies
+/go.sum
+/go/pkg/
+
+# Compiled Object Files
+*.o
+*.a
+
+# Temporary Files & Logs
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+.DS_Store
+
+# Editor & IDE Specific Files
+.vscode/
+.idea/
+*.iml
+
+# GoLand & JetBrains
+*.pb.go
+*.test
+__debug_bin
+
+# Go Coverage & Testing
+*.cover
+*.test
+.coverage.out
+
+# Node.js (if frontend exists)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Docker
+docker-compose.override.yml
