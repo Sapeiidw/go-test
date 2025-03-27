@@ -63,5 +63,5 @@ func (c *UserController) DeleteUser(ctx *fiber.Ctx) error {
 	if err != nil {
 		return ctx.Status(500).JSON(fiber.Map{"error": "Failed to delete user"})
 	}
-	return ctx.SendStatus(204)
+	return ctx.JSON(fiber.Map{"message": "User deleted successfully"})
 }
