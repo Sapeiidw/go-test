@@ -58,10 +58,23 @@ func (c *UserController) UpdateUser(ctx *fiber.Ctx) error {
 }
 
 func (c *UserController) DeleteUser(ctx *fiber.Ctx) error {
-	id, _ := ctx.ParamsInt("id")
-	err := c.service.DeleteUser(uint(id))
+	// Parse and validate ID
+	id, err := ctx.ParamsInt("id")
 	if err != nil {
-		return ctx.Status(500).JSON(fiber.Map{"error": "Failed to delete user"})
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid user ID"})
 	}
-	return ctx.JSON(fiber.Map{"message": "User deleted successfully"})
+
+	userID := uint(id) // Convert once and reuse
+
+	// Check if user exists before deleting
+	if _, err := c.service.GetUserByID(userID); err != nil {
+		return ctx.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+	}
+
+	// Delete the user
+	if err := c.service.DeleteUser(userID); err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete user"})
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{"message": "User deleted successfully"})
 }
